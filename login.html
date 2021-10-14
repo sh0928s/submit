@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!--Login-->
+    <div id="Box">
+        <div id="box">
+        <form id="form" method="POST">
+            <h1>Login</h1>
+            <p> <input type="text" id="name" placeholder="Username"/></p>
+            <p> <input type="tel" id="tel" placeholder="Telephone"/> </p>
+            <p> <input type="password" id="password" placeholder="Password"/></p>
+            <p> <input type="button" value="Login" class="button" onclick="Login()"/>
+                &nbsp;&nbsp;
+                <input type="reset" value="Reset" class="button" />
+            </p>
+            <div id="text">
+                Don't have an account?
+                <input type="button" value="Register"  class="button" onclick="toRegister()"/>
+            </div>
+        </form>
+        </div>
+        <img id="background" src="pic_for_login.jpg"/> 
+    </div>
+
+
+<script>
+    'use strict'
+    //设置盒子宽高
+    let h=window.innerHeight*0.5;  //白色背景高度
+    let h1=window.innerHeight*0.6;  //粉色盒子高度
+    let w=window.innerWidth*0.7; //白色背景宽度
+    let w1=window.innerWidth*0.3; //粉色盒子宽度  
+    let w2=window.innerWidth*0.35; //背景图宽度
+    document.getElementById("Box").style.height=h+"px";
+    document.getElementById("Box").style.width=w+"px";
+    document.getElementById("box").style.height=h1+"px";
+    document.getElementById("box").style.width=w1+"px";
+    document.getElementById("background").style.height=h+"px";
+    document.getElementById("background").style.width=w2+"px";
+    //设置盒子位置
+    document.getElementById("Box").style.marginTop=(window.innerHeight/2-h/2)+"px";
+    document.getElementById("Box").style.marginLeft=(window.innerWidth/2-w/2)+"px";
+    document.getElementById("box").style.marginTop=(-h1/2+h/2)+"px";
+    document.getElementById("box").style.marginLeft=(w*0.07)+"px";
+
+    //使表单位于居中位置并设置字体大小
+    let height=h1*0.6;
+    document.getElementById("form").style.height=height+"px";
+    let father_height=h1;
+    let e=father_height-height;
+    document.getElementById("form").style.bottom=(-e/2)+"px";
+    document.getElementById("form").style.fontSize=e/10+"px";
+
+    //跳转到注册界面
+    function toRegister(){
+        window.location.href="register.html";
+    }
+
+    //跳转到自我介绍界面
+    function toIntroduction(){
+        window.location.href="self-introduction.html";
+    }
+
+    //实现登录功能
+    function Login(){
+         //获取用户信息
+        let name=document.getElementById("name").value;
+        let tel=document.getElementById("tel").value;
+        let pwd=document.getElementById("password").value;
+
+        if(name===""||tel===""||pwd==="") alert("Comments should not be empty");
+        else{
+             //判断本地是否有用户数据
+            if(localStorage.length==0) alert("User not found");
+            else{
+                //创建数组用于存储本地数据
+                let namedata=[];
+                let teldata=[];
+                let pwddata=[];
+                //将本地数据存入数组
+                for(let i=0;i<localStorage.length;i++){
+                    let key=localStorage.key(i);
+                    let keydata=localStorage.getItem(key);
+                    let keyinfo=JSON.parse(keydata);
+                    namedata[i]=keyinfo.name;
+                    teldata[i]=keyinfo.tel;
+                    pwddata[i]=keyinfo.pwd;
+                }
+
+                //判断用户是否存在
+                let flag=0;
+                if(namedata.indexOf(name)<0) alert("Name not found");
+                else{
+                    for(let i=namedata.indexOf(name);i<localStorage.length;i++){
+                        if(namedata[i]===name&&teldata[i]===tel){
+                            if(pwddata[i]!==pwd) { 
+                                alert("Wrong passwords");
+                                flag=1;
+                                break;}
+                            else{
+                                flag=1;
+                            alert("Successfully login! The page will redirect.");
+                            toIntroduction();
+                            }
+                        }   
+                    }
+                     if(flag===0) alert("User not found");
+                }
+                }
+            }            
+         }
+
+
+</script>
+</body>
+</html>

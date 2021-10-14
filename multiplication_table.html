@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>九九乘法表</title>
+<style>
+    input{
+    border-radius: 10px;
+    }
+    .odd,.even{
+        border: 1px solid white;
+        width:90px;
+        height: 30px;
+        display: inline-block;
+        text-align: center;
+
+    }
+    .odd{
+        background-color: rgba(250, 215, 217, 1); 
+    }
+    .even{
+        background-color: #cbc0d3; 
+    }
+</style>
+</head>
+
+<body>
+ 
+    <input type="button" value="生成九九乘法表" onclick="run()"/>
+    <br/><br/>
+    <div id="box"></div>
+
+    <script>
+        'use strict'
+        function run(){
+            let str="";
+            for(let i=1;i<=9;i++){
+                str+="<div>";
+                for(let j=1;j<=i;j++){
+                    if(i%2===1) str+="<div class='odd'>";
+                    else str+="<div class='even'>";
+                    str+=j+"*"+i+"="+j*i+"</div>";
+                }
+                str+="<div>";
+            }
+            document.getElementById("box").innerHTML=str;
+        }
+    </script>
+
+</body>
+
+</html>

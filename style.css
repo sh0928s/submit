@@ -1,0 +1,65 @@
+
+body:not(#Box){
+    background-color: #cbc0d3;  
+}
+
+#Box:not(#box){
+   font-family: 'Times New Roman', Times, serif; 
+   background-color:white;    
+}
+
+/*防止父级边框塌陷*/
+#Box:after{
+   content: "";
+   display: block;
+   clear: both;
+}
+
+#box{
+   background-color:rgba(250, 215, 217, 1);  
+   text-align: center;
+   float: left;
+}
+
+#form{
+   position: relative;
+}
+
+#background{
+   float: right;  
+}
+
+h1{
+   color: white;
+   text-align: center;
+   letter-spacing: 3px;
+   margin: 0;
+}
+
+p{
+   margin: 10px;
+}
+
+input:not(.button){
+   outline: none;
+   background-color: rgba(250, 215, 217, 0);
+   height:23px;
+   border:none;
+   border-bottom: 1px solid white; 
+ 
+}
+
+.button{
+   height: 25px;
+   border: none;
+   border-radius: 5px;
+   background-color: white;
+   color:rgba(235, 176, 180, 0.822);
+   font-size: 15px;
+}
+
+#text{
+   margin:0;
+   color:white;
+   font-size:18px;
+}

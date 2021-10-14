@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>表单请求</title>
+    </head>
+    <body>
+        <h2>请输入字母a-z:</h2>
+        <p>姓名：<input type="text" id="text"/></p>
+        <button onclick="getValue()">点击查询</button>
+        <button onclick="clearText()">点击清除</button>
+        <p>搜索建议：<div id="search"></div></p>
+        <script>
+            'use strict'
+            function clearText(){
+                let search= document.getElementById("search");
+                search.innerHTML="";
+
+            }
+            let value;
+            function getValue(){
+                value=document.getElementById("text").value;
+                showSuggestion(value);
+            }
+            function showSuggestion(str){
+                const xhr=new XMLHttpRequest();
+                xhr.responseType="json";
+                xhr.open("GET","http://yapi.smart-xwork.cn/mock/100868/getName",true);
+                xhr.send();
+                let flag=false; //判断是否有匹配数据
+                let search= document.getElementById("search");
+                if(str.length==0){
+                    search.innerHTML="";
+                    return;
+                }
+                xhr.onreadystatechange=function(){
+                    if(xhr.readyState===4&&xhr.status===200){
+                        for(let j in xhr.response){
+                             if(xhr.response[j].indexOf(str)>=0){
+                                flag=true;
+                                let newone=document.createElement("p");
+                                newone.innerText=xhr.response[j];
+                                search.appendChild(newone); 
+                             }
+                        }
+                        if(flag==false){
+                            search.innerText="没有匹配数据";}
+                    }
+                }
+            }
+
+        </script>
+     </body>
+</html>
+
+
+
+

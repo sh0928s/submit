@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!--Register-->
+    <div id="Box">
+        <div id="box">
+            <form id="form" method="POST" >
+                <h1>Register</h1>
+                <p> <input type="text" id="name" placeholder="Username"/></p>
+                <p> <input type="tel" id="tel" placeholder="Telephone"/> </p>
+                <p> <input type="password" id="password" placeholder="Password"/></p>
+                <p> <input type="password" id="checkpwd" placeholder="Confirm Password"/></p>
+                <p> <input type="button" value="Create Account" class="button" onclick="Register()"/>
+                    &nbsp;&nbsp;
+                    <input type="reset" value="Reset" class="button" />
+                </p>
+                <div id="text">
+                    Have an account?
+                    <input type="button" value="Login"  class="button" onclick="toLogin()"/>
+                </div> 
+            </form>
+        </div> 
+             <img id="background" src="pic_for_login.jpg"/> 
+    </div>
+
+<script>
+    'use strict'
+    //设置盒子宽高
+    let h=window.innerHeight*0.5;  //白色背景高度
+    let h1=window.innerHeight*0.6;  //粉色盒子高度
+    let w=window.innerWidth*0.7; //白色背景宽度
+    let w1=window.innerWidth*0.3; //粉色盒子宽度  
+    let w2=window.innerWidth*0.35; //背景图宽度
+    document.getElementById("Box").style.height=h+"px";
+    document.getElementById("Box").style.width=w+"px";
+    document.getElementById("box").style.height=h1+"px";
+    document.getElementById("box").style.width=w1+"px";
+    document.getElementById("background").style.height=h+"px";
+    document.getElementById("background").style.width=w2+"px";
+    
+    //设置盒子位置
+    document.getElementById("Box").style.marginTop=(window.innerHeight/2-h/2)+"px";
+    document.getElementById("Box").style.marginLeft=(window.innerWidth/2-w/2)+"px";
+    document.getElementById("box").style.marginTop=(-h1/2+h/2)+"px";
+    document.getElementById("box").style.marginLeft=(w*0.07)+"px";
+
+    //使表单位于居中位置并设置字体大小
+    let height=h1*0.6;
+    document.getElementById("form").style.height=height+"px";
+    let father_height=h1;
+    let e=father_height-height;
+    document.getElementById("form").style.bottom=(-e/2)+"px";
+    document.getElementById("form").style.fontSize=e/10+"px";
+
+    //跳转到登录界面
+    function toLogin(){
+       window.location.href="login.html";
+    }
+
+    //实现注册功能
+    function Register(){
+        //获取用户信息
+        let name=document.getElementById("name").value;
+        let tel=document.getElementById("tel").value;
+        let pwd=document.getElementById("password").value;
+        let checkpwd=document.getElementById("checkpwd").value;
+        //用于判断手机号是否正确的正则表达式
+        let isTel=/^[1][0-9]{10}$/; 
+
+
+        if(name===""||tel===""||pwd===""||checkpwd==="") 
+        {alert("Comments should not be empty");
+        return;}
+        if(!isTel.test(tel))  
+        {alert("Wrong phone number");
+        return;}
+        
+        //判断本地是否有数据
+        if(localStorage.length===0){
+             //判断输入信息是否正确
+            if(pwd!=checkpwd)  
+            {alert("Entered different passwords");
+            return;}
+            else{
+                AddNewone(name,tel,pwd);
+                alert("Successfully register! The page will redirect to login interface.");
+                toLogin();
+            }
+        }
+        else{
+            for(let i=0;i<localStorage.length;i++){
+                //得到本地数据，并还原成对象形式
+                let key=localStorage.key(i);
+                let keydata=localStorage.getItem(key);
+                let keyinfo=JSON.parse(keydata);
+
+                //判断用户是否存在
+                if(keyinfo.name===name&&keyinfo.tel===tel){
+                    alert("User existed");
+                    break;
+                }
+                //若用户不存在，判断两次输入密码是否相同
+                else if(pwd!==checkpwd){
+                    alert("Entered different passwords");
+                    break;
+                }
+                 //如果两次输入密码相同，向本地添加数据
+                else{
+                   AddNewone(name,tel,pwd);
+                   alert("Successfully register! The page will redirect to login interface.");
+                    toLogin();
+                   break;
+                }
+            }
+        }
+
+    }
+
+    function AddNewone(name,tel,pwd){
+        let newone={};
+        newone.name=name;
+        newone.tel=tel;
+        newone.pwd=pwd;
+        let info=JSON.stringify(newone);
+        localStorage.setItem("key"+localStorage.length,info);
+    }
+   
+</script>
+</body>
+</html>

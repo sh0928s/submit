@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>自我介绍</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+}
+body{
+     overflow: hidden;  
+}
+#left{
+    background-color: rgb(44, 41, 41);
+    float: left;  
+    position: relative;
+    z-index: -3;
+}
+.left_img{
+    position: relative;
+}
+#right{
+    position: relative; 
+   float: left; 
+}
+#box:after{
+    content: "";
+    display: table;
+    clear: both;
+} 
+#head{
+    text-align: center;
+      background-color:antiquewhite;
+}
+
+.me{
+    color: #daa520;
+}
+.about{
+    color: #555;
+}
+
+#decoration{
+    float: left;  
+}
+#main{
+     float: left;
+}
+input{
+    display: block;
+    outline: none;
+   background-color: rgba(0, 0, 0, 0);
+   border:none;
+   border-bottom: 1px solid rgb(214, 209, 209);
+}
+
+
+span.pixal{
+    position:absolute;
+    left:-5px;
+    top:-5px;
+    width:4px;
+    height:4px;
+    background:white;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+
+</style>
+</head>
+<body>
+<div id="back"></div>
+
+<div id="left">
+    <img class="left_img" src="1.jpg"/>
+    <img class="left_img" src="2.jpg"/>
+    <img class="left_img" src="3.jpg"/>
+    <img class="left_img" src="4.jpg"/>
+    <img class="left_img"  src="5.jpg"/>
+</div>
+<div id="right">
+    <div id="head">
+       <p><span class="about">ABOUT</span><span class="me">ME</span></p>
+    </div>
+    <div id="box">
+    <div id="decoration">
+        <img id="img" src="https://ccdn.goodq.top/caches/7f329f8f10cb197f5898117ce0e2e793/aHR0cHM6Ly81ZTA0N2M3YjQwNTJiLnQ3NC5xaWZlaXllLmNvbS9xZnktY29udGVudC91cGxvYWRzLzIwMTkvMTIvZDI1M2JiY2FjYjkxZGNlMDUxOGFjYTJjZWQ3ZWRmNmYtOTAud2VicA_p_p100_p_3D_p_p100_p_3D.webp"/>
+    </div>
+    <div id="main">
+        <form>
+            <input type="text" value="出生日期：2002/9/28"/>
+            <input type="text" value="姓名：苏慧"/>
+            <input type="text" value="民族：汉族"/>
+            <input type="text" value="手机：18960862982"/>
+            <input type="text" value="毕业院校：电子科技大学"/>
+            <input type="text" value=" 邮箱：306006986@qq.com"/>
+            <input type="text" value="籍贯：福建福州"/>
+            <input type="text" value="现居城市：四川成都"/>
+        </form> 
+    </div>
+    </div>
+</div>
+<script>
+    'use strict'
+    let h=window.innerHeight;
+    let h1=window.innerHeight*0.13;
+    let lw=window.innerWidth*0.11;  //左边盒子宽度
+    let rw=window.innerWidth-lw;   //右边盒子宽度
+    let ah=(h-h1)*0.45;
+    let aw=rw*0.45;
+
+    //设置左部分内容
+    document.getElementById("left").style.height=h+"px";
+    document.getElementById("left").style.width=lw+"px";
+    for(let i=0;i<5;i++){
+    document.getElementsByClassName("left_img")[i].style.width=lw+"px";
+    document.getElementsByClassName("left_img")[i].style.height=h*0.1+"px";
+    document.getElementsByClassName("left_img")[i].style.marginTop=h*0.05+"px";
+    document.getElementsByClassName("left_img")[i].style.marginBottom=h*0.05+"px";
+    }
+
+   //设置右部分内容
+   document.getElementById("right").style.height=h+"px";
+    document.getElementById("right").style.width=rw+"px"
+    document.getElementById("head").style.height=h1+"px";
+    document.getElementById("head").style.width=rw+"px";
+    document.getElementById("box").style.width=2*aw+"px";
+    document.getElementById("box").style.height=ah*+"px"
+    document.getElementById("img").style.height=ah+"px";
+    document.getElementById("img").style.width=aw+"px";
+    document.getElementById("main").style.height=ah*1.7+"px";
+    document.getElementById("main").style.width=aw*(1-0.1)+"px";
+    document.getElementById("main").style.paddingLeft=aw*0.1+"px";
+ 
+    //设置右部分元素位置
+    document.getElementById("box").style.marginLeft=(rw/2-aw)+"px";
+    document.getElementById("box").style.marginTop=(h/2-h1/2-ah/2)+"px";
+   document.getElementById("main").style.marginTop=-ah*0.35+"px";
+
+    //设置字体大小和行间距
+    document.getElementById("head").style.fontSize=h/13+"px";
+    for(let i=0;i<8;i++){
+        document.getElementsByTagName("input")[i].style.fontSize=ah*0.07+"px";
+        document.getElementsByTagName("input")[i].style.marginBottom=ah*0.1+"px";
+        document.getElementsByTagName("input")[i].style.marginTop=ah*0.1+"px";
+    }
+
+    //设置字体居中
+    document.getElementById("head").style.lineHeight=h*0.13+"px";
+
+    //设置动画
+var back = document.getElementById("back")
+var pixaldata = [] //定义数组存放每个span的信息
+var pixallife = 300 //设置每个粒子的生命周期
+window.addEventListener("mousemove", function (move) { 
+    var span = document.createElement("span") //新建span作为粒子
+    span.className = "pixal" //使用pixal作为class设置
+    back.appendChild(span) //将span作为子元素添加至#back层
+     //往pixaldata中插入对应的粒子信息
+    pixaldata.push({
+        //初始生命为0
+        age: 0, 
+        //粒子颜色随机
+        color: "rgba(" + parseInt(Math.random() * 255) + ","
+         + parseInt(Math.random() * 255) + "," 
+         + parseInt(Math.random() * 255) +","
+          + parseInt(Math.random() * 255)+ ")", 
+        //x轴位移速度
+        vx: Math.random()*0.5,
+         //y轴位移速度
+        vy: Math.random()*0.5,
+        sx: move.x, //根据鼠标坐标设置粒子的起始坐标
+        sy:move.y
+    })
+})
+
+//绘制粒子
+function draw() { 
+    for (var i = 0; i < pixaldata.length; i++) {
+        pixal = pixaldata[i] //指定当前粒子属性
+        children = back.children[i] //指定当前子元素
+        pixal.age=pixal.age+2;//增加生命值
+        pixal.sx += pixal.vx * 2 //设置位移距离
+        pixal.sy += pixal.vy * 2
+        children.style.background = pixal.color //设置背景颜色
+        children.style.left = pixal.sx + "px" //根据位移值设置坐标
+        children.style.top = pixal.sy + "px"
+        if (pixal.age >= pixallife) { //判断生命值是否超过生命周期
+            pixaldata.splice(i, 1) //删除数组元素
+            back.removeChild(back.childNodes[i]) //删除子元素
+        }
+        
+    }
+}
+setInterval(draw, 1)
+
+</script>
+</body>
+</html>
