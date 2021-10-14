@@ -21,10 +21,10 @@ body{
     position: relative;
 }
 #right{
-    position: relative; 
+     position: relative; 
    float: left; 
 }
-#box:after{
+ #box:after{
     content: "";
     display: table;
     clear: both;
@@ -46,6 +46,7 @@ body{
 }
 #main{
      float: left;
+
 }
 input{
     display: block;
@@ -56,22 +57,9 @@ input{
 }
 
 
-span.pixal{
-    position:absolute;
-    left:-5px;
-    top:-5px;
-    width:4px;
-    height:4px;
-    background:white;
-    border-radius: 50%;
-    z-index: 10;
-}
-
-
 </style>
 </head>
 <body>
-<div id="back"></div>
 
 <div id="left">
     <img class="left_img" src="1.jpg"/>
@@ -102,8 +90,9 @@ span.pixal{
     </div>
     </div>
 </div>
+
 <script>
-    'use strict'
+
     let h=window.innerHeight;
     let h1=window.innerHeight*0.13;
     let lw=window.innerWidth*0.11;  //左边盒子宽度
@@ -149,52 +138,6 @@ span.pixal{
 
     //设置字体居中
     document.getElementById("head").style.lineHeight=h*0.13+"px";
-
-    //设置动画
-var back = document.getElementById("back")
-var pixaldata = [] //定义数组存放每个span的信息
-var pixallife = 300 //设置每个粒子的生命周期
-window.addEventListener("mousemove", function (move) { 
-    var span = document.createElement("span") //新建span作为粒子
-    span.className = "pixal" //使用pixal作为class设置
-    back.appendChild(span) //将span作为子元素添加至#back层
-     //往pixaldata中插入对应的粒子信息
-    pixaldata.push({
-        //初始生命为0
-        age: 0, 
-        //粒子颜色随机
-        color: "rgba(" + parseInt(Math.random() * 255) + ","
-         + parseInt(Math.random() * 255) + "," 
-         + parseInt(Math.random() * 255) +","
-          + parseInt(Math.random() * 255)+ ")", 
-        //x轴位移速度
-        vx: Math.random()*0.5,
-         //y轴位移速度
-        vy: Math.random()*0.5,
-        sx: move.x, //根据鼠标坐标设置粒子的起始坐标
-        sy:move.y
-    })
-})
-
-//绘制粒子
-function draw() { 
-    for (var i = 0; i < pixaldata.length; i++) {
-        pixal = pixaldata[i] //指定当前粒子属性
-        children = back.children[i] //指定当前子元素
-        pixal.age=pixal.age+2;//增加生命值
-        pixal.sx += pixal.vx * 2 //设置位移距离
-        pixal.sy += pixal.vy * 2
-        children.style.background = pixal.color //设置背景颜色
-        children.style.left = pixal.sx + "px" //根据位移值设置坐标
-        children.style.top = pixal.sy + "px"
-        if (pixal.age >= pixallife) { //判断生命值是否超过生命周期
-            pixaldata.splice(i, 1) //删除数组元素
-            back.removeChild(back.childNodes[i]) //删除子元素
-        }
-        
-    }
-}
-setInterval(draw, 1)
 
 </script>
 </body>
